@@ -1,0 +1,31 @@
+.userPhoto {
+    width: 150px;
+    height: 150px;
+    border-radius: 90px;
+    padding: 20px;
+}
+
+.container {
+    padding-top: 20px;
+    background-color: rgb(47, 47, 165);
+}
+
+.selectedPage {
+    font-weight: bold;
+    border: solid black 3px;
+    background-color:white;
+    padding: 3px;
+    padding-top:6px;
+    padding-bottom:6px;
+}
+
+.pagination {
+    width: 15px;
+    height: 10px;
+    border: solid black 1px;
+    padding: 3px;
+    margin-left: 2px;
+}
+.pagination:hover{
+    cursor:pointer;
+}
