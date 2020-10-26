@@ -12,13 +12,12 @@ class UsersContainer extends React.Component{
         this.props.getUsers(this.props.currentPage,this.props.pageSize);
     }
     onPageChanged=(page)=>{
-        debugger;
         this.props.getUsers(page,this.props.pageSize)
     }
 
     render(){
     return <>
-    {this.props.isFetching?<Preloader/>:null}
+        {this.props.isFetching?<Preloader/>:null}
         <Users 
         totalUsersCount={this.props.totalUsersCount}
         pageSize={this.props.pageSize}
@@ -26,8 +25,7 @@ class UsersContainer extends React.Component{
         onPageChanged={this.onPageChanged}
         follow={this.props.follow}
         unfollow={this.props.unfollow}
-        users={this.props.users}
-    />
+        users={this.props.users}/>
     </>
     }
 }

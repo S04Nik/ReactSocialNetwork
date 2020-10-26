@@ -49,9 +49,7 @@ export const usersReducer=(state=initialState,action)=>{
 
   export const getUsersThunkCreator=(currentPage,pageSize)=>{
    return (dispatch)=>{
-
     dispatch(toggleIsFetching(true));
-
     usersAPI.getUsers(currentPage,pageSize)
     .then(response=>{
       dispatch(toggleIsFetching(false));
@@ -59,30 +57,27 @@ export const usersReducer=(state=initialState,action)=>{
       dispatch(pageActive(currentPage));
       dispatch(setCountUsers(response.data.totalCount))});
   }}
-  export const follow=(id)=>{
-    return (dispatch)=>{
-      dispatch(toggleIsFetching(true));
-      usersAPI.postFollowers(id)
-      .then(response=>{
-        dispatch(toggleIsFetching(false));
-        if(response.data.resultCode===0)
-        {
-          dispatch(followSuccess(id))     
-        } dispatch(toggleIsFetching(false));
-      })
 
-    }
+  const followUnfollowFlow=async(dispatch,userId,apiMethod,actionCreator)=>{
+    dispatch(toggleIsFetching(true));
+    let response=await apiMethod(userId);
+    if(response.data.resultCode===0)
+    {
+      dispatch(actionCreator(userId))
+    } dispatch(toggleIsFetching(false));
   }
-  export const unfollow=(id)=>{
-    return (dispatch)=>{
-      dispatch(toggleIsFetching(true));
 
-      usersAPI.deleteFollowers(id)
-      .then(response=>{
-        if(response.data.resultCode===0)
-        {
-          dispatch(unfollowSuccess(id))
-        } dispatch(toggleIsFetching(false));
-    })
+  export const follow=(id)=>{
+    return async(dispatch)=>{
+     let apiMethod=usersAPI.postFollowers.bind(usersAPI);
+     let actionCreator=followSuccess;
+     followUnfollowFlow(dispatch,id,apiMethod,actionCreator);
     }
+}
+  export const unfollow=(id)=>{
+    return async(dispatch)=>{
+      let apiMethod=usersAPI.deleteFollowers.bind(usersAPI);
+      let actionCreator=unfollowSuccess;
+      followUnfollowFlow(dispatch,id,apiMethod,actionCreator);
+     }
   }

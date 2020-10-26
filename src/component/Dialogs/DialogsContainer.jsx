@@ -1,7 +1,7 @@
 import React from 'react';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {messageActionCreate,sendMessageAction} from '../../redux/dialogs-reducer';
+import {sendMessageAction} from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect'
@@ -17,16 +17,9 @@ let mapStateToProps=(state)=>{
 }
 
 let mapDispatchToProps=(dispatch)=>{
-    return {
-        textTyping:(tmp)=>{
-            let action=messageActionCreate(tmp);
-            dispatch(action);
-        },
-        sendMessage:(tmp)=>{
-            let action = sendMessageAction(tmp);
-            dispatch(action);
+    return{ sendMessage:(newMessageBody)=>{
+            dispatch(sendMessageAction(newMessageBody));}
         }
-    }
 }
 
 export default compose(

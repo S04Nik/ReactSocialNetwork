@@ -1,16 +1,10 @@
 import React from 'react';
+import AddMessageForm from './AddMessageForm/AddMessageForm';
 import s from './Dialogs.module.css';
 
 const Dialogs=(props)=>{
+    let addNewMessage=(values)=>{props.sendMessage(values.newMessageBody);}
     
-    let messageText=React.createRef();
-  
-    let ontextTyping=()=>{
-    props.textTyping(messageText.current.value);
-    }
-    let onsendMessage=()=>{
-        props.sendMessage(messageText.current.value);
-    }
     return(
     <div className={s.dialogs}>
     <div className={s.dialogsItems}>
@@ -19,9 +13,7 @@ const Dialogs=(props)=>{
     <div className={s.messages}>
     {props.messageElements}
     </div>
-    <textarea ref={messageText} onChange={ontextTyping}
-     value={props.newMessage}></textarea>
-    <button onClick={onsendMessage}>Send</button>
+    <AddMessageForm onSubmit={addNewMessage}/>
     </div>)
 }
 
